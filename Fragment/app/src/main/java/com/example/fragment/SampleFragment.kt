@@ -1,31 +1,85 @@
 package com.example.fragment
 
+import SecondSampleFragment
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 
-class SampleFragment : Fragment(R.layout.fragment_sample) {
+class SampleFragment : Fragment(), DataListener  {
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        println("================================================================================= onAttach ")
-    }
+    private lateinit var editText: EditText
+    private lateinit var textView: TextView
+    private var dataPassListener: DataListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        println("==============================================================================  onCreate ")
+    interface DataPassListener {
+        fun firstFragmentListener(data: String)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println("==============================================================================  onCreateView ")
-        return inflater.inflate(R.layout.fragment_sample, container, false)
+        val view = inflater.inflate(R.layout.fragment_sample, container, false)
+        editText = view.findViewById(R.id.et_first_fragment)
+        textView = view.findViewById(R.id.tv_first_fragment)
+
+        val btnPassData = view.findViewById<Button>(R.id.btnSubmit)
+        btnPassData.setOnClickListener {
+            val data = editText.text.toString()
+            dataPassListener?.onListener(data)
+        }
+        return view
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataPassListener = context as DataListener
+    }
+
+    override fun onListener(data: String) {
+        editText.setText(data)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        println("==============================================================================  onCreate ")
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +88,7 @@ class SampleFragment : Fragment(R.layout.fragment_sample) {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        println("==============================================================================  onCreateView ")
+        println("==============================================================================  onViewStateRestored ")
     }
 
     override fun onStart() {
@@ -71,4 +125,6 @@ class SampleFragment : Fragment(R.layout.fragment_sample) {
         super.onDestroy()
         println("==============================================================================  onDestroy ")
     }
+
+
 }

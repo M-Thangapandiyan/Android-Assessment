@@ -6,33 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_one"
-        android:id="@+id/btnFragment"
+        android:id="@+id/middle"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        >
+
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/first_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </androidx.appcompat.widget.AppCompatButton>
+        app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toTopOf="@+id/middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+    </androidx.fragment.app.FragmentContainerView>
 
-<androidx.appcompat.widget.AppCompatButton
-android:id="@+id/btnFragment2"
-    android:text="@string/fragment_two"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/btnFragment">
-    </androidx.appcompat.widget.AppCompatButton>
-
-    <fragment
-        android:name="com.example.fragment.SampleFragment"
-        android:id="@+id/fragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/second_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFragment2">
-    </fragment>
+        app:layout_constraintTop_toBottomOf="@+id/middle">
+    </androidx.fragment.app.FragmentContainerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
