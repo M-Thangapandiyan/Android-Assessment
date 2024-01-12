@@ -1,7 +1,5 @@
 package com.example.fragment
 
-import SecondSampleFragment
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,16 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 
-class SampleFragment : Fragment(), DataListener  {
+
+class SampleFragment(private var dataPassListener: FirstFragmentListener) : Fragment(), DataListener {
 
     private lateinit var editText: EditText
     private lateinit var textView: TextView
-    private var dataPassListener: DataListener? = null
-
-    interface DataPassListener {
-        fun firstFragmentListener(data: String)
+    interface FirstFragmentListener {
+        fun firstFragmentListenerData(data: String)
     }
 
     override fun onCreateView(
@@ -29,22 +25,15 @@ class SampleFragment : Fragment(), DataListener  {
         val view = inflater.inflate(R.layout.fragment_sample, container, false)
         editText = view.findViewById(R.id.et_first_fragment)
         textView = view.findViewById(R.id.tv_first_fragment)
-
         val btnPassData = view.findViewById<Button>(R.id.btnSubmit)
         btnPassData.setOnClickListener {
-            val data = editText.text.toString()
-            dataPassListener?.onListener(data)
+            dataPassListener.firstFragmentListenerData(editText.text.toString())
         }
         return view
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        dataPassListener = context as DataListener
-    }
-
     override fun onListener(data: String) {
-        editText.setText(data)
+        textView.text = data
     }
 
 
@@ -125,6 +114,8 @@ class SampleFragment : Fragment(), DataListener  {
         super.onDestroy()
         println("==============================================================================  onDestroy ")
     }
+
+
 
 
 }

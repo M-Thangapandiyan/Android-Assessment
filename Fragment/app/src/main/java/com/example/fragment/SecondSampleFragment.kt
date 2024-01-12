@@ -12,7 +12,7 @@ import com.example.fragment.DataListener
 import com.example.fragment.R
 import com.example.fragment.SampleFragment
 
-class SecondSampleFragment : Fragment(), SampleFragment.DataPassListener {
+class SecondSampleFragment : Fragment(), SampleFragment.FirstFragmentListener {
 
     private lateinit var editText: EditText
     private lateinit var textView: TextView
@@ -25,11 +25,9 @@ class SecondSampleFragment : Fragment(), SampleFragment.DataPassListener {
         val view = inflater.inflate(R.layout.fragment_second_sample, container, false)
         editText = view.findViewById(R.id.etEdit)
         textView = view.findViewById(R.id.tvText)
-
         val btnPassData = view.findViewById<Button>(R.id.btnButton)
         btnPassData.setOnClickListener {
-            val data = editText.text.toString()
-            dataPassListener?.onListener(data)
+            dataPassListener?.onListener(editText.text.toString())
         }
         return view
     }
@@ -39,7 +37,8 @@ class SecondSampleFragment : Fragment(), SampleFragment.DataPassListener {
         dataPassListener = context as DataListener
     }
 
-    override fun firstFragmentListener(data: String) {
-        editText.setText(data)
+    override fun firstFragmentListenerData(data: String) {
+        textView.text = data
     }
+
 }

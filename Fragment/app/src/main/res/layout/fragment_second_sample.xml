@@ -30,11 +30,15 @@
             >
         </Button>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tvText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/fragment_one" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/second_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnButton"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
