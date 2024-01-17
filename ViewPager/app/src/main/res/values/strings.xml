@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ViewPager</string>
-    <string name="view_pager">ViewPager</string>
-    <string name="view_pager2">ViewPager2</string>
-    ViewPager
+    <string name="view_pager">View Pager One</string>
+    <string name="view_pager_two">View Pager Two</string>
+    <string name="view_pager_three">View Pager Three</string>
+    <string name="view_pager_four">View Pager Four</string>
+    <string name="view_pager_five">View Pager Five</string>
 </resources>

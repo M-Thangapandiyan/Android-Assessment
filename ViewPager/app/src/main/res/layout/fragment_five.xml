@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/begin_guideline"
+        app:layout_constraintGuide_begin="10dp"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/end_guideline"
+        app:layout_constraintGuide_end="10dp"
+        android:orientation="vertical"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_viewpager_five"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/view_pager_five"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_viewpager_five">
+    </androidx.appcompat.widget.AppCompatEditText>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

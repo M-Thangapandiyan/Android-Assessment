@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity(), DataListener , SampleFragment.FirstFra
         setContentView(R.layout.activity_main)
         val fragmentManager: FragmentManager = supportFragmentManager
         sampleFragment = SampleFragment(this)
-        println(" this ==========================================================================${this.toString()}")
+        println(" this ==========================================================================${this}")
         secondSampleFragment = SecondSampleFragment()
         fragmentManager.beginTransaction().replace(R.id.first_fragment, sampleFragment).commit()
         fragmentManager.beginTransaction().replace(R.id.second_fragment, secondSampleFragment).commit()
