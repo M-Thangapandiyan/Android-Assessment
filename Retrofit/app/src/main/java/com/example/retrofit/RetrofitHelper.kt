@@ -1,20 +1,3 @@
-//package com.example.retrofit
-//
-//import retrofit2.Retrofit
-//import retrofit2.converter.gson.GsonConverterFactory
-//
-//object RetrofitHelper {
-//
-//    private const val baseUrl = "https://quotable.io/"
-//
-//    fun getInstance(): Retrofit {
-//        return Retrofit.Builder().baseUrl(baseUrl)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//}
-
-
 package com.example.retrofit
 
 import retrofit2.Retrofit
@@ -26,8 +9,7 @@ object RetrofitHelper {
 
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+            .addConverterFactory(GsonConverterFactory.create()).build()
     }
 }
 

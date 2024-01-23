@@ -1,8 +1,8 @@
 package com.example.retrofit
 
-data class Quote(
+data class User(
     val userId: Int,
     val id: Int,
-    val tittle: String,
+    val title: String,
     val body: String
 )
