@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter(private var user: List<User>,private val context: Context, private val listener: UserListener) :
+class UserAdapter(private var user: List<User>, private val context: Context, private val listener: UserListener) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,9 +31,6 @@ class UserAdapter(private var user: List<User>,private val context: Context, pri
         holder.body.setOnClickListener {
             listener.onClick(user[position])
         }
-
-
-
     }
 
     override fun getItemCount() = user.size
