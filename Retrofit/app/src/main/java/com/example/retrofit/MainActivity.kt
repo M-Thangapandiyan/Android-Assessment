@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity(), UserListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        while (true) {
-//           println("=========================== while")
-//        }
         initView()
     }
 
