@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MVVM Design Pattern"
+rootProject.name = "MVVM"
 include(":app")
  

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MVVM</string>
+    <string name="id">ID</string>
+    <string name="user_id">USER ID</string>
+    <string name="title">TITLE</string>
+    <string name="body">BODY</string>
+</resources>

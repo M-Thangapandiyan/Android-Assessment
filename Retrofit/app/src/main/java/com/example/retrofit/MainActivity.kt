@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +20,23 @@ class MainActivity : AppCompatActivity(), UserListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
+    private lateinit var userViewModel:UserViewModel
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
+
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+        userViewModel.listOfUsers.observe(this) {
+            recyclerView = findViewById(R.id.recyclerView)
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            val adapter = UserAdapter(it, this@MainActivity, this@MainActivity)
+            progressBar.visibility = View.INVISIBLE
+            recyclerView.adapter = adapter
+        }
     }
 
     private fun initView() {
@@ -34,14 +46,9 @@ class MainActivity : AppCompatActivity(), UserListener {
         lifecycleScope.launch(Dispatchers.IO) {
             val result = userApi.getUser()
             withContext(Dispatchers.Main) {
-                recyclerView = findViewById(R.id.recyclerView)
-                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-                val adapter = UserAdapter(result, this@MainActivity, this@MainActivity)
-                progressBar.visibility = View.INVISIBLE
-                recyclerView.adapter = adapter
+                userViewModel.setUserList(result)
             }
-        }
-    }
+        } }
 
     override fun onClick(user: User) {
         val intent = Intent(this, TextExpandableActivity::class.java)
