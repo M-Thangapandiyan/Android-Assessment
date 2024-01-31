@@ -1,6 +1,7 @@
 package com.example.mvvm
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -10,12 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var userViewModel: UserViewModel
     private lateinit var userAdapter: UserAdapter
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,22 +29,25 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        userAdapter = UserAdapter(this)
+        userAdapter = UserAdapter(this, this)
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         getUserData(userAdapter)
     }
 
-    private fun getUserData(userAdapter : UserAdapter) {
-        userViewModel.getUserDataFromApi()
-
+    private fun getUserData(userAdapter: UserAdapter) {
+        userViewModel.getUsers()
         userViewModel.setUserList().observe(this, Observer {
-
             userAdapter.setUserData(it)
             recyclerView.adapter = userAdapter
             progressBar.visibility = View.INVISIBLE
         })
+    }
 
+    override fun onClick(user: User) {
+        val intent = Intent(this, UserActivity::class.java)
+        intent.putExtra("id", user.id)
+        startActivity(intent)
     }
 }
 

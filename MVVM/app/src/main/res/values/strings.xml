@@ -4,4 +4,8 @@
     <string name="user_id">USER ID</string>
     <string name="title">TITLE</string>
     <string name="body">BODY</string>
+    <string name="userId">USER ID : %1$d</string>
+    <string name="userTitle">Title : %1$s</string>
+    <string name="userBody">Body : %1$s</string>
+
 </resources>

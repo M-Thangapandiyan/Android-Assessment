@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter(private var context: Context) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(private var context: Context, private var listener: UserListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private var user : List<User> = arrayListOf()
-        fun setUserData(userList : List<User>){
-            this.user = userList
-        }
+    private var user: List<User> = arrayListOf()
+    fun setUserData(userList: List<User>) {
+        this.user = userList
+    }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var id: TextView = itemView.findViewById(R.id.tv_id)
@@ -26,12 +26,16 @@ class UserAdapter(private var context: Context) : RecyclerView.Adapter<UserAdapt
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_row, parent, false)
         return UserViewHolder(itemView)
     }
+
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.id.text = context.getString(R.string.id) + " : ${user[position].id}"
         holder.userId.text = context.getString(R.string.user_id) + " : ${user[position].userId}"
         holder.title.text = context.getString(R.string.title) + " : ${user[position].title}"
         holder.body.text = context.getString(R.string.body) + " : ${user[position].body}"
+        holder.body.setOnClickListener{
+            listener.onClick(user[position])
+        }
     }
 
     override fun getItemCount() = user.size
