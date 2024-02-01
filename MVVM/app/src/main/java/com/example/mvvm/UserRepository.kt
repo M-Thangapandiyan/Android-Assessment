@@ -1,24 +1,27 @@
 package com.example.mvvm
 
+import androidx.lifecycle.MutableLiveData
 
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+class UserRepository {
 
-class UserRepository(private val userViewModel: UserActivityViewModel, private val viewModel: UserViewModel ) {
-    fun getUserDataFromApi() {
-        val userApi = RetrofitHelper.getInstance().create(UserApi::class.java)
-        viewModel.viewModelScope.launch(Dispatchers.IO) {
-            val result = userApi.getUser()
-            viewModel.userList.postValue(result)
+    private var userApi: UserApi = RetrofitHelper.getInstance().create(UserApi::class.java)
+    suspend fun getUserDataFromApiById(getId: Int, userById: MutableLiveData<APIResponse<User>>) {
+        try {
+            val result = userApi.getUserById(getId)
+            userById.postValue(APIResponse(success = result))
+        } catch (exception: Exception) {
+            userById.postValue(APIResponse(error = exception.message))
         }
     }
-    fun getUserDataFromApiById(getId: Int) {
-        val userApi = RetrofitHelper.getInstance().create(UserApi::class.java)
-        userViewModel.viewModelScope.launch(Dispatchers.IO) {
-            val result = userApi.getUserById(getId)
-            userViewModel.setUserById().postValue(result)
+
+    suspend fun getUsers(userList: MutableLiveData<APIResponse<List<User>>>) {
+        try {
+            val result = userApi.getUser()
+            userList.postValue(APIResponse(success = result))
+        } catch (exception: Exception) {
+            userList.postValue(APIResponse(error = exception.message))
         }
+
     }
 
 }

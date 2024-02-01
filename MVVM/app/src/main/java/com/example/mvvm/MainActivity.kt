@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,11 +37,18 @@ class MainActivity : AppCompatActivity(), UserListener {
     }
 
     private fun getUserData(userAdapter: UserAdapter) {
-        userViewModel.getUsers()
+
+        userViewModel.getUserDataFromApi()
         userViewModel.setUserList().observe(this, Observer {
-            userAdapter.setUserData(it)
-            recyclerView.adapter = userAdapter
-            progressBar.visibility = View.INVISIBLE
+            if (it.success != null){
+                userAdapter.setUserData(it.success)
+                recyclerView.adapter = userAdapter
+                progressBar.visibility = View.INVISIBLE
+            }
+
+            if (it.error != null){
+                Toast.makeText(this,it.error,Toast.LENGTH_SHORT)
+            }
         })
     }
 

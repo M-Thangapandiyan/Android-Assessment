@@ -1,9 +1,12 @@
 package com.example.mvvm
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -23,7 +26,7 @@ class UserActivity : AppCompatActivity() {
         val getId = intent.getIntExtra("id", 0)
 
         userViewModel = ViewModelProvider(this)[UserActivityViewModel::class.java]
-        if(getId != 0){
+        if (getId != 0) {
             userViewModel.getUserId(getId)
         }
         getUser()
@@ -32,9 +35,14 @@ class UserActivity : AppCompatActivity() {
 
     private fun getUser() {
         userViewModel.setUserById().observe(this, Observer {
-            tv_userId.text = this.getString(R.string.userId, it.userId)
-            tv_title.text = this.getString(R.string.userTitle, it.title)
-            tv_body.text = this.getString(R.string.userBody, it.body )
+            if (it.success != null) {
+                tv_userId.text = this.getString(R.string.userId, it.success.userId)
+                tv_title.text = this.getString(R.string.userTitle, it.success.title)
+                tv_body.text = this.getString(R.string.userBody, it.success.body)
+            }
+            if (it.error != null) {
+                Toast.makeText(this, it.error, Toast.LENGTH_SHORT)
+            }
         })
     }
 
