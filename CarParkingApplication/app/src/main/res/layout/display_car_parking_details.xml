@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/fifteen_sp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="@dimen/fifteen_sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/begin_guideline"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/ten_dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/ten_dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/carNo"
+            android:paddingTop="@dimen/five_dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/car_no"
+            app:layout_constraintStart_toStartOf="@id/begin_guideline"
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/phoneNumber"
+            android:text="@string/phone_number"
+            android:paddingTop="@dimen/five_dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/begin_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/carNo">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/slotNumber"
+            android:paddingTop="@dimen/five_dp"
+            android:text="@string/slot_no"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/begin_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/checkInTime"
+            android:text="@string/check_in"
+            android:paddingTop="@dimen/five_dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/begin_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/slotNumber">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/checkOut"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="wrap_content"
+            android:text="@string/check_out"
+            app:layout_constraintTop_toBottomOf="@+id/checkInTime"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            >
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

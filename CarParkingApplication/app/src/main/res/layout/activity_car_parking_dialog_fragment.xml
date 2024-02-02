@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CarParkingDialogFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/carDetailsTitle"
+        app:titleTextColor="@color/black"
+        android:background="@color/blue"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="@string/check_out_details"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/begin_guideline"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/ten_dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+
+        android:id="@+id/carNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:text="@string/car_no"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/carDetailsTitle"
+
+
+        >
+
+    </androidx.appcompat.widget.AppCompatTextView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_number"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/carNo"
+        >
+    </androidx.appcompat.widget.AppCompatTextView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/slotNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/slot_no"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        >
+    </androidx.appcompat.widget.AppCompatTextView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/checkInTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/check_in"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/slotNumber"
+        >
+    </androidx.appcompat.widget.AppCompatTextView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/priceCalculation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/checkInTime"
+        >
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:id="@+id/ok"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceCalculation"
+        >
+
+    </androidx.appcompat.widget.AppCompatButton>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
