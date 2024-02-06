@@ -1,6 +1,5 @@
 package com.example.carparkingapplication
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,10 @@ import java.util.Date
 import java.util.Locale
 
 class CarParkingAdapter(
-    private val carParkingDataBase: CarParkingDataBase) :
-    RecyclerView.Adapter<CarParkingAdapter.ViewHolder>() {
+    private val carParkingInterFace: CarParkingInterFace
+) : RecyclerView.Adapter<CarParkingAdapter.ViewHolder>() {
+
+    private var carParkingList: MutableList<CarParkingModel> = mutableListOf()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvCarNo: AppCompatTextView = itemView.findViewById(R.id.carNo)
@@ -24,34 +25,37 @@ class CarParkingAdapter(
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.display_car_parking_details, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context)
+            .inflate(R.layout.display_car_parking_details, viewGroup, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return carParkingDataBase.getCarParkingDetails()?.count ?: 0
+        return carParkingList.size
     }
 
-    @SuppressLint("Range")
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val carParkingDetails = carParkingDataBase.getCarParkingDetails()
-        carParkingDetails?.moveToFirst()
-        holder.tvCarNo.text =
-            carParkingDetails?.getString(carParkingDetails.getColumnIndex(CarParkingDataBase.CAR_NO))
-        holder.phoneNumber.text =
-            carParkingDetails?.getString(carParkingDetails.getColumnIndex(CarParkingDataBase.PHONE_NUMBER))
-        holder.slotNumber.text =
-            (carParkingDetails?.getString(carParkingDetails.getColumnIndex(CarParkingDataBase.SLOT_NUMBER)) ?:0).toString()
-        val date = carParkingDetails?.getColumnIndex(CarParkingDataBase.CHECK_IN_TIME)
-            ?.let { getCurrentDateTime(it.toLong()) }
-        holder.checkInTime.text = "${Constants.CHECK_IN_TIME}${date}"
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val model: CarParkingModel = carParkingList[position]
+        if (model.carNo != Constants.NULL) {
+            holder.tvCarNo.text = "${Constants.CAR_NUMBER}${model.carNo}"
+            holder.phoneNumber.text = "${Constants.USER_PHONE_NUMBER}${model.phoneNumber}"
+            holder.slotNumber.text = "${Constants.CAR_SLOT_NO}${model.slotNumber}"
+            val date = getCurrentDateTime(model.checkIn)
+            holder.checkInTime.text = "${Constants.CHECK_IN_TIME}${date}"
+            holder.checkOut.setOnClickListener {
+                carParkingInterFace.onClick(model)
+            }
+        }
     }
 
     private fun getCurrentDateTime(checkIn: Long): String {
         val dateTime = SimpleDateFormat(Constants.DATE_PATTERN, Locale.getDefault())
         return dateTime.format(Date(checkIn))
+    }
+
+    fun setCarList(carParkingDetails: MutableList<CarParkingModel>) {
+        this.carParkingList = carParkingDetails
+        notifyDataSetChanged()
     }
 }

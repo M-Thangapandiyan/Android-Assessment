@@ -10,6 +10,7 @@ class UserActivityViewModel() : ViewModel() {
     private val userRepository = UserRepository()
 
     private val userById = MutableLiveData<APIResponse<User>>()
+
     fun setUserById(): MutableLiveData<APIResponse<User>> {
         return userById
     }
