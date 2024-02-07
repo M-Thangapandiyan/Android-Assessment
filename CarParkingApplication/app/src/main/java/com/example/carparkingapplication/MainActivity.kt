@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager
-        carParkingAdapter.setCarList(carParkingViewModel.getCarDetails())
+        getCarList()
     }
 
     private val resultLauncher =
@@ -68,14 +69,21 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
                     checkIn = System.currentTimeMillis()
                     carParkingModel = CarParkingModel(carNo, phoneNumber, slotNo, checkIn)
                     carParkingViewModel.addCarParkingDetails(carParkingModel)
-                    carParkingAdapter.setCarList(carParkingViewModel.getCarDetails())
+                    getCarList()
                 }
             }
         }
 
     override fun btnClicked(slotNumber: Int) {
         carParkingViewModel.remove(slotNumber)
-        carParkingAdapter.setCarList(carParkingViewModel.getCarDetails())
+        getCarList()
+    }
+
+    private fun getCarList() {
+        carParkingViewModel.setListOfCarParkingDetails()
+        carParkingViewModel.getCarDetailLiveData().observe(this, Observer {
+            this.carParkingAdapter.setCarList(it)
+        } )
     }
 }
 

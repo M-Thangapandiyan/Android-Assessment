@@ -4,9 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.lifecycle.MutableLiveData
 
-class DataBase(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
+class CarParkingRepository(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION), CarParking {
     companion object {
         private const val DATABASE_NAME = "CARPARKINGDETAILS"
         private const val DATABASE_VERSION = 1
@@ -29,7 +30,7 @@ class DataBase(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         onCreate(p0)
     }
 
-    fun addCarParkingDetails(carParkingModel: CarParkingModel) {
+     override suspend fun addCarParkingDetails(carParkingModel: CarParkingModel) {
         val value = ContentValues()
         with(value) {
             put(CAR_NO, carParkingModel.carNo)
@@ -41,7 +42,7 @@ class DataBase(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         writeDataBase.insert(TABLE_NAME, null, value)
     }
 
-    fun getCarParkingDetails(): MutableList<CarParkingModel> {
+    override suspend fun getCarParkingDetails(): MutableList<CarParkingModel> {
         val carParkingList = mutableListOf<CarParkingModel>()
         val readDataBase = this.readableDatabase
         val result =
@@ -56,11 +57,10 @@ class DataBase(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 carParkingList.add(carParkingModel)
             } while (result.moveToNext())
         }
-        readDataBase.close()
         return carParkingList
     }
 
-    fun getAvailableCarParkingDetails(): MutableList<Int> {
+     suspend fun getAvailableCarParkingDetails(): MutableList<Int> {
         val carParkingSlotList = mutableListOf<Int>()
         val readDataBase = this.readableDatabase
         val result =
@@ -74,18 +74,12 @@ class DataBase(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 carParkingSlotList.add(slotNumber)
             } while (result.moveToNext())
         }
-        readDataBase.close()
         return carParkingSlotList
     }
 
-    fun remove(slotNumber: Int) {
+     override suspend fun remove(slotNumber: Int) {
         val writeDataBase = this.writableDatabase
         val query = "DELETE FROM $TABLE_NAME WHERE SLOT_NUMBER = $slotNumber"
-        writeDataBase.use {
-            with(it) {
-                execSQL(query)
-            }
-        }
+        writeDataBase.execSQL(query)
     }
-
 }

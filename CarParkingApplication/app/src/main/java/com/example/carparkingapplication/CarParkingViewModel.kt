@@ -2,11 +2,18 @@ package com.example.carparkingapplication
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CarParkingViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var carParkingDataBase = DataBase(application, null)
+    private var carParkingDataBase = CarParkingRepository(application, null)
     private var carParkingSlotList = mutableListOf<Int>()
+
+
+    private var carParkingDetails = MutableLiveData<List<CarParkingModel>>()
 
     fun addCarParkingDetails(carParkingModel: CarParkingModel) {
         val availableSlot = getNextAvailable()
@@ -15,16 +22,25 @@ class CarParkingViewModel(application: Application) : AndroidViewModel(applicati
         } else {
             carParkingModel.slotNumber = availableSlot
         }
-        carParkingDataBase.addCarParkingDetails(carParkingModel)
+        viewModelScope.launch(Dispatchers.IO) {
+            carParkingDataBase.addCarParkingDetails(carParkingModel)
+            setListOfCarParkingDetails()
+        }
     }
 
-    fun getCarDetails(): MutableList<CarParkingModel> {
-        return carParkingDataBase.getCarParkingDetails()
+    fun setListOfCarParkingDetails() {
+        viewModelScope.launch(Dispatchers.IO) {
+            carParkingDetails.postValue(carParkingDataBase.getCarParkingDetails())
+        }
+    }
+
+    fun getCarDetailLiveData(): MutableLiveData<List<CarParkingModel>> {
+        return carParkingDetails
     }
 
     private fun getNextAvailable(): Int {
         this.carParkingSlotList = carParkingDataBase.getAvailableCarParkingDetails()
-        carParkingSlotList.forEachIndexed { index, slotNumber ->
+        this.carParkingSlotList.forEachIndexed { index, slotNumber ->
             if (slotNumber != index + 1) {
                 return index + 1
             }
@@ -32,8 +48,83 @@ class CarParkingViewModel(application: Application) : AndroidViewModel(applicati
         return -1
     }
 
+//    private fun getNextAvailable(): Int {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            carParkingSlotList = carParkingDataBase.getAvailableCarParkingDetails()
+//            println("===================================================$carParkingSlotList ")
+//        }
+//
+//        this.carParkingSlotList.forEachIndexed { index, slotNumber ->
+//            if (slotNumber != index + 1) {
+//                return index + 1
+//            }
+//        }
+//        return -1
+//    }
+
     fun remove(slotNumber: Int) {
-        carParkingDataBase.remove(slotNumber)
+        viewModelScope.launch(Dispatchers.IO) {
+            carParkingDataBase.remove(slotNumber)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private fun getNextAvailable(): Int {
+    viewModelScope.launch {
+        val a = carParkingDataBase.getCarParkingDetails()
+        getNextAvailabl()
+    }
+        this.carParkingSlotList.forEachIndexed { index, slotNumber ->
+            if (slotNumber != index + 1) {
+                return index + 1
+            }
+        }
+        return -1
+
+    }
+
+    private suspend fun getNextAvailabl(): Int {
+        val carParkingDetails = carParkingDataBase.getCarParkingDetails()
+         var car = mutableListOf<Int>()
+        for (a in carParkingDetails ) {
+            car.add(a.slotNumber)
+            println("car ===========================$car")
+            println("=================================================slot number = ${a.slotNumber}")
+        }
+        car.forEachIndexed { index, slotNumber ->
+            if (slotNumber != index + 1) {
+                return index + 1
+            }
+        }
+        return -1
     }
 
 }

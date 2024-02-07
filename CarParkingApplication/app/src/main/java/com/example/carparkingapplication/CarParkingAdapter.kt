@@ -14,7 +14,11 @@ class CarParkingAdapter(
     private val carParkingInterFace: CarParkingInterFace
 ) : RecyclerView.Adapter<CarParkingAdapter.ViewHolder>() {
 
-    private var carParkingList: MutableList<CarParkingModel> = mutableListOf()
+    private var carParkingList: List<CarParkingModel> = mutableListOf()
+    fun setCarList(carDetails: List<CarParkingModel>) {
+        this.carParkingList = carDetails
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvCarNo: AppCompatTextView = itemView.findViewById(R.id.carNo)
@@ -34,7 +38,6 @@ class CarParkingAdapter(
         return carParkingList.size
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model: CarParkingModel = carParkingList[position]
         if (model.carNo != Constants.NULL) {
@@ -52,10 +55,5 @@ class CarParkingAdapter(
     private fun getCurrentDateTime(checkIn: Long): String {
         val dateTime = SimpleDateFormat(Constants.DATE_PATTERN, Locale.getDefault())
         return dateTime.format(Date(checkIn))
-    }
-
-    fun setCarList(carParkingDetails: MutableList<CarParkingModel>) {
-        this.carParkingList = carParkingDetails
-        notifyDataSetChanged()
     }
 }

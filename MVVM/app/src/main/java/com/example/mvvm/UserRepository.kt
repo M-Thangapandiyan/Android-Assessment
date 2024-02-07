@@ -22,5 +22,4 @@ class UserRepository {
             userList.postValue(APIResponse(error = exception.message))
         }
     }
-
 }
