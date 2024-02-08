@@ -17,7 +17,5 @@ object Constants {
     const val PHONE_NUMBER_ERROR_MESSAGE="Please fill the phone number field with 10 numbers"
     const val  CAR_PARKING_DETAILS="carParkingDetails"
     const val  CAR_PARKING_AMOUNT=" Car Parking Amount ="
-    const val  ADD_DATA ="add"
-    const val  REMOVE_DATA ="remove"
 }
 

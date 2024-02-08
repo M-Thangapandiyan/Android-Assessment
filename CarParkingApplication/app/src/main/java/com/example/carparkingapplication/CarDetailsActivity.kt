@@ -9,9 +9,9 @@ import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputLayout
 
 class CarDetailsActivity : AppCompatActivity() {
-    private lateinit var  btnSubmit: AppCompatButton
-    private lateinit var tvCarNo : TextInputLayout
-    private lateinit var tvPhoneNumber : TextInputLayout
+    private lateinit var btnSubmit: AppCompatButton
+    private lateinit var tvCarNo: TextInputLayout
+    private lateinit var tvPhoneNumber: TextInputLayout
     private var isAllFieldsChecked = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +23,12 @@ class CarDetailsActivity : AppCompatActivity() {
             val carNo = tvCarNo.editText?.text.toString()
             val phoneNumber = tvPhoneNumber.editText?.text.toString()
             val intent = Intent(this, MainActivity::class.java)
-            submitForm(carNo,phoneNumber)
+            submitForm(carNo, phoneNumber)
         }
     }
+
     private fun submitForm(carNo: String, phoneNumber: String) {
-        isAllFieldsChecked = checkAllFields(carNo,phoneNumber)
+        isAllFieldsChecked = checkAllFields(carNo, phoneNumber)
         if (isAllFieldsChecked) {
             intent.putExtra(Constants.CAR_NO, carNo)
             intent.putExtra(Constants.PHONE_NUMBER, phoneNumber)
@@ -35,6 +36,7 @@ class CarDetailsActivity : AppCompatActivity() {
             finish()
         }
     }
+
     private fun checkAllFields(carNo: String, phoneNumber: String): Boolean {
         if (carNo.isEmpty()) {
             errorMessage(Constants.CAR_NUMBER_FIELD_ERROR_MESSAGE)
@@ -45,6 +47,7 @@ class CarDetailsActivity : AppCompatActivity() {
         }
         return true
     }
+
     private fun errorMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

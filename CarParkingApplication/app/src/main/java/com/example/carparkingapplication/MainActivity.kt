@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
         carParkingViewModel.setListOfCarParkingDetails()
         carParkingViewModel.getCarDetailLiveData().observe(this, Observer {
             this.carParkingAdapter.setCarList(it)
-        } )
+        })
     }
 }
 
