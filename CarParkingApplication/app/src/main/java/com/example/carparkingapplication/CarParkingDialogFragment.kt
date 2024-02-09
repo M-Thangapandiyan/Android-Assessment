@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class CarParkingDialogFragment : DialogFragment() {
+
     private lateinit var tvCarNo: AppCompatTextView
     private lateinit var tvPhoneNumber: AppCompatTextView
     private lateinit var tvSlotNo: AppCompatTextView
@@ -39,10 +40,10 @@ class CarParkingDialogFragment : DialogFragment() {
     }
 
     private fun initView() {
-        val carNo = arguments?.getString(Constants.CAR_NO)
-        val phoneNumber = arguments?.getString(Constants.USER_PHONE_NUMBER)
-        val checkIn = arguments?.getLong(Constants.CHECK_IN)
-        val slotNumber = arguments?.getInt(Constants.SLOT_NO)
+        val carNo = requireArguments().getString(Constants.CAR_NO)
+        val phoneNumber = requireArguments().getString(Constants.USER_PHONE_NUMBER)
+        val checkIn = requireArguments().getLong(Constants.CHECK_IN)
+        val slotNumber = requireArguments().getInt(Constants.SLOT_NO)
         tvCarNo.text = "${Constants.CAR_NUMBER}${carNo}"
         tvPhoneNumber.text = "${Constants.USER_PHONE_NUMBER}${phoneNumber}"
         tvSlotNo.text = "${Constants.CAR_SLOT_NO}${slotNumber}"
@@ -51,8 +52,8 @@ class CarParkingDialogFragment : DialogFragment() {
         priceCalculation.text = "${Constants.CAR_PARKING_AMOUNT}${calculate()}"
         btnOk.setOnClickListener {
 
-            if (slotNumber != null) {
-                slotNumber?.let { it1 -> dialogListener?.btnClicked(it1) }
+            slotNumber?.let { slotNumber ->
+                dialogListener?.btnClicked(slotNumber)
             }
             dismiss()
         }

@@ -19,6 +19,5 @@ class CarParkingRepository(application: Application) {
 
     suspend fun getAvailableCarParkingDetails(): MutableList<Int> {
         return carParkingDataBase.getAvailableCarParkingDetails()
-
     }
 }

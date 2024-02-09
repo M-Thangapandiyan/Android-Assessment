@@ -13,14 +13,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDialogListener {
 
     private lateinit var carParkingViewModel: CarParkingViewModel
-    private lateinit var carParkingModel: CarParkingModel
     private lateinit var carParkingAdapter: CarParkingAdapter
     private lateinit var btnSubmit: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
-    private lateinit var carNo: String
-    private lateinit var phoneNumber: String
-    private var slotNo: Int = 0
-    private var checkIn: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +25,6 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
     }
 
     private val carParkingInterface: CarParkingInterFace = object : CarParkingInterFace {
-
         override fun onClick(view: CarParkingModel) {
             val carParkingDialogFragment = CarParkingDialogFragment()
             val bundle = Bundle()
@@ -49,6 +43,7 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
         btnSubmit.setOnClickListener {
             val intent = Intent(this, CarDetailsActivity::class.java)
             resultLauncher.launch(intent)
+//            startActivity(intent)
         }
         carParkingAdapter = CarParkingAdapter(carParkingInterface)
         recyclerView.adapter = carParkingAdapter
@@ -61,16 +56,7 @@ class MainActivity : AppCompatActivity(), CarParkingDialogFragment.CarParkingDia
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
-                data?.let { data ->
-                    carNo = data.getStringExtra(Constants.CAR_NO) ?: Constants.EMPTY_STRING
-                    phoneNumber =
-                        data.getStringExtra(Constants.PHONE_NUMBER) ?: Constants.EMPTY_STRING
-                    checkIn = System.currentTimeMillis()
-                    carParkingModel = CarParkingModel(carNo, phoneNumber, slotNo, checkIn)
-                    carParkingViewModel.addCarParkingDetails(carParkingModel)
-                    getCarList()
-                }
+                getCarList()
             }
         }
 
